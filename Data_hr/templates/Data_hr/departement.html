@@ -1,0 +1,58 @@
+{% extends 'Data_hr/base.html' %}
+
+{% block content %}
+<div class="container">
+    <div>
+        <table class="table table-striped-columns" id="example">
+           <thead class="text-center">
+              <tr>
+
+                 <td>nom</td>
+                 <td>mission</td>
+                 <td>manager</td>
+                 <td></td>
+                 <td>
+                  <a href="{% url 'departement_form' %}" class="btn btn-outline-success">
+                       <i class="far fa-plus">Ajouter</i>
+                  </a>
+               </td>
+
+
+              </tr>
+
+           </thead>
+
+           <tbody id="myTable" class="text-center">
+              {% if departement_list %}
+              {% for item in departement_list %}
+              <tr>
+                 <td>{{item.nom}}</td>
+                 <td>{{ item.mission}}</td>
+                 <td>{{item.manager}}</td>
+                 <td>
+                    <a href="{% url 'Departement_update' item.id %}" class="btn text-secondary px-0">
+                         <i class="far fa-edit fa-lg"></i>
+                    </a>
+                    <form action="{% url 'Departement_delete' item.id %}" method="post" class="d-inline">
+                     {% csrf_token %}
+                     <button type="submit" class="btn">
+                         <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                     </button>
+                    </form>
+                 </td>
+                 <td></td>
+
+              </tr>
+
+              {% endfor %}
+              {% else %}
+              <p class="text-center text-white">No reccord found.</p>
+              {% endif %}
+
+
+           </tbody>
+
+        </table>
+     </div>
+</div>
+{% endblock content %}

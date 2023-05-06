@@ -1,0 +1,115 @@
+{% extends 'Data_hr/base.html' %}
+
+{% block content %}
+<div class="container shadow bg-danger">
+    <div>
+        <table class="table table-striped-columns" id="exampl">
+           <thead class="text-center  text-white">
+              <tr style="font-family:century gothic;font-weight:bold">
+                 <td>nom</td>
+                 <td>post_nom</td>
+                 <td>Statut</td>
+                 <td>age</td>
+                 <td>photo</td>
+                 <td></td>
+                 <td>
+                  <a href="{% url 'agent_form' %}" class="btn btn-outline-success">
+                       <i class="far fa-plus">Ajouter</i>
+                  </a>
+                 </td>
+                   <td>
+                  <a href="{% url 'Agentlist' %}" class="btn btn-outline-success">
+                       <i class="far fa-plus">All</i>
+                  </a>
+                 </td>
+
+
+              </tr>
+
+           </thead>
+
+           <tbody id="myTable" class="text-center">
+              {% if agent_list_Actif %}
+              {% for item in agent_list_Actif %}
+              <tr style="font-family:century gothic">
+                 <td>{{item.nom}}</td>
+                 <td>{{ item.naissance|date:"SHORT_DATE_FORMAT"}}</td>
+                  <td>{{item.Actif}}</td>
+                  {% if item.age > 23 %}
+                  <td style="color:red;font-weight:bold">{{item.age}}</td>
+                   {% else %}
+                  <td>{{item.age}}</td>
+                  {% endif %}
+                  {% if item.photo %}
+                 <td>
+                     <img src="{{item.photo.url}}" alt="" class="" width="30" height="80%" style="border-radius:45% 45% 45% 45%">
+                 </td>
+                  {% else %}
+                   <td>
+                     <img src="">
+                   </td>
+                  {% endif %}
+                 <td>
+                    <a href="{% url 'Agent_update' item.id %}" class="btn text-secondary px-0">
+                         <i class="far fa-edit fa-lg"></i>
+                    </a>
+                    <form action="{% url 'Agent_delete' item.id %}" method="post" class="d-inline">
+                     {% csrf_token %}
+                     <button type="submit" class="btn">
+                         <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                     </button>
+                    </form>
+                 </td>
+                 <td></td>
+
+              </tr>
+
+              {% endfor %}
+              {% else %}
+              <p class="text-center text-white">No reccord found.</p>
+              {% endif %}
+
+
+
+             {% if agent_list %}
+              {% for item in agent_list %}
+              <tr>
+                 <td>{{item.nom}}</td>
+                 <td>{{ item.post_nom}}</td>
+                  <td>{{item.Actif}}</td>
+                  <td>{{item.fonction}}</td>
+                  {% if item.photo %}
+                 <td>
+                     <img src="{{item.photo.url}}" alt="" class="" width="30" height="80%">
+                 </td>
+                  {% else %}
+                   <td>
+                     <img src="">
+                   </td>
+                  {% endif %}
+                 <td>
+                    <a href="{% url 'Agent_update' item.id %}" class="btn text-secondary px-0">
+                         <i class="far fa-edit fa-lg"></i>
+                    </a>
+                    <form action="{% url 'Agent_delete' item.id %}" method="post" class="d-inline">
+                     {% csrf_token %}
+                     <button type="submit" class="btn">
+                         <i class="far fa-trash-alt fa-lg text-danger float-right"></i>
+                     </button>
+                    </form>
+                 </td>
+                 <td></td>
+
+              </tr>
+
+              {% endfor %}
+              {% else %}
+              <p class="text-center text-white">No reccord found.</p>
+              {% endif %}
+           </tbody>
+
+        </table>
+     </div>
+</div>
+
+{% endblock content %}

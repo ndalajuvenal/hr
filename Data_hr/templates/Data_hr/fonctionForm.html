@@ -1,0 +1,31 @@
+{% extends 'Data_hr/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container">
+<form action="" method="post"  autocomplete="off">
+    {% csrf_token %}
+<div class="row">
+    <div class="col-md-4">
+        {{ form.nom|as_crispy_field }}
+    </div>
+    <div class="col-md-4">
+        {{ form.service|as_crispy_field }}
+    </div>
+     <div class="col-md-4">
+        {{ form.categorie|as_crispy_field }}
+    </div>
+
+
+<div class="row">
+    <div class="col-md-8">
+        <button type="submit" class="btn btn-success btn-block btn-lg"><i class="fas fa-database"></i>save</button>
+    </div>
+    <div class="col-md-4">
+        <a href="{% url 'Fonctionlist' %}" class="btn btn-primary btn-block btn-lg">
+            <i class="far fa-stream"><i class="fas fa-stream"></i>Back to list</i>
+        </a>
+    </div>
+</div>
+</form>
+</div>
+{% endblock content %}
