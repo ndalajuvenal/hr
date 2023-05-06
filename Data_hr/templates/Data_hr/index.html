@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="{% static 'Data_hr/css/input.css' %}">
+    <link rel="stylesheet" href="{% static 'Data_hr/css/bootstrap@4.4.1.min.css' %}">
+    <link rel="stylesheet" href="{% static 'Data_hr/css/font6.3.0.css' %}">
+    <link rel="stylesheet" href="{% static 'Data_hr/css/jquery.ui.css' %}">
+    <title>Employee Register</title>
+</head>
+
+<body>
+
+    <div class="container-fluid ">
+     <nav class="navbar navbar-expand-lg navbar-light  bg-success shadow p-20 mb-20  rounded">
+  <a class="navbar-brand" href="#">Navbar</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavDropdown">
+         <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'home' %}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="{% url 'Categorielist' %}">Categorie</a>
+            <a class="dropdown-item" href="{% url 'list' %}">Departement</a>
+              <a class="dropdown-item" href="{% url 'agent_list_Actif' %}">Agent</a>
+               <a class="dropdown-item" href="{% url 'Servicelist' %}">Service</a>
+              <a class="dropdown-item" href="{% url 'Fonctionlist' %}">Fonction</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+      </ul>
+
+  </div>
+</nav>
+        <div class="col-md-10 offset-md-1 mt-5">
+
+                {% block content %}
+            <h3 class="text-center">GESTION DES RESSOURCES HUMAINES</h3>
+                {% endblock content %}
+        </div>
+
+        <script src="{% static 'Data_hr/js/jquery.slim.min.js' %}"></script>
+        <script src="{% static 'Data_hr/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'Data_hr/js/popper.js' %}"></script>
+        <script src="{% static 'Data_hr/js/jquery.ui.js' %}"></script>
+        <script src="{% static 'Data_hr/js/jquery-3.6.0.js' %}"></script>
+        <script src="{% static 'Data_hr/js/bundel.js' %}"></script>
+        <script src="{% static 'Data_hr/js/pdfmake.min.js' %}"></script>
+        <script src="{% static 'Data_hr/js/vfs_fonts.js' %}"></script>
+        <script src="{% static 'Data_hr/js/datatables.min.js' %}"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('#example').DataTable({
+                    paging: true,
+                    pageLength: 10,
+                    lengthChange: true,
+                    autoWidth: true,
+                    searching: false,
+                    bInfo: true,
+                    bSort: true,
+                    //BUTTONS
+                    dom: 'lFingertip',
+                    buttons: [
+                        {//copy
+                            extend: 'copy',
+                            text: '<i class="fas fa-clone"></i>',
+                            className: 'btn btn-secondary btn-sm',
+                            titleAttr: 'Copy',
+                            exportOptions: {
+                                columns: [1, 2, 3]
+                            },
+
+                        },
+                        {//Excel
+                            extend: 'excel',
+                            text: '<i class="fas fa-file-excel"></i>',
+                            className: 'btn btn-secondary btn-sm',
+                            titleAttr: 'Excel',
+                            exportOptions: {
+                                columns: [1, 2, 3]
+                            },
+
+                        },
+                        {//Print
+                            extend: 'print',
+                            text: '<i class="fas fa-print"></i>',
+                            className: 'btn btn-secondary btn-sm',
+                            titleAttr: 'Print',
+                            exportOptions: {
+                                columns: [1, 2, 3]
+                            },
+                            //font
+                            customize: function (win) {
+                                $(win.document.body).css('font-size', '10pt')
+                                $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                            },
+
+                        },
+                        {//Pdf
+                            extend: 'pdf',
+                            text: '<i class="fas fa-file-pdf"></i>',
+                            className: 'btn btn-secondary btn-sm',
+                            titleAttr: 'Pdf',
+                            exportOptions: {
+                                columns: [1, 2, 3]
+                            },
+                            //centre table
+                            tableHeader: {
+                                alignment: 'center'
+                            },
+                            customize: function (doc) {
+                                doc.styles.tableHeader.alignment = 'center';
+                                doc.styles.tableBodyOdd.alignment = 'center';
+                                doc.styles.tableBodyEven.alignment = 'center';
+                                doc.styles.tableHeader.fontSize = 10;
+                                doc.defaultStyle.fontSize = 8;
+                                doc.content[1].table.widths = Array(doc.content[1].table.body[1].length + 1).join('*').split('');
+
+                            },
+
+                        },
+                    ]
+
+
+                });
+                $('#msg').slideUp(4000);
+                $(".datetimeinput").datepicker({changeYear:true,changeMonth:true});
+            });
+
+        </script>
+    </div>
+</body>
+
+</html>

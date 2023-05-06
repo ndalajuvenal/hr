@@ -7,7 +7,7 @@ from .models import *
 
 
 def home(request):
-    return render(request, 'Data_hr/base.html')
+    return render(request, 'Data_hr/index.html')
 
 
 # Create your views here.
